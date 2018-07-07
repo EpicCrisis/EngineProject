@@ -1,21 +1,40 @@
 
 #include <GLFW\glfw3.h>
+#include <Windows.h>
+#include <gl/GLU.h>
 #include <iostream>
+#include "Application.h"
+
+const int RESOLUTION_X = 640;
+const int RESOLUTION_Y = 480;
+
+bool bVSync = true;
+
+float lastUpdateTime = 0.0f;
+float deltaTime = 0.0f;
+float FPS = 0.0f;
 
 using namespace std;
 
-void Update(float _deltaTime, float _FPS)
+void OnWindowResized(GLFWwindow* window, int width, int height)
 {
-    system("CLS");
-    cout << "Delta Time : " << _deltaTime << endl;
-    cout << "FPS : " << _FPS << endl;
+    glViewport(0, 0, width, height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    // Use ortho 2D view.
+    gluOrtho2D(0, width, 0, height);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
 int main(void)
 {
     GLFWwindow* window;
+    Application app;
 
-    float lastUpdateTime = (float)glfwGetTime();
+    lastUpdateTime = (float)glfwGetTime();
 
     // Initialize the library.
     if (!glfwInit())
@@ -24,7 +43,7 @@ int main(void)
     }
 
     // Create a windowed mode window and its OpenGL context.
-    window = glfwCreateWindow(640, 480, "VozEngine", NULL, NULL);
+    window = glfwCreateWindow(RESOLUTION_X, RESOLUTION_Y, "VozEngine", NULL, NULL);
 
     if (!window)
     {
@@ -32,28 +51,34 @@ int main(void)
         return -1;
     }
 
+    glfwSetWindowSizeCallback(window, OnWindowResized);
+
     // Make the window's context current.
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(bVSync ? 1 : 0);
 
-    glfwSwapInterval(1);
+    OnWindowResized(window, RESOLUTION_X, RESOLUTION_Y);
+
+    app.Start();
 
     // Loop until the user closes the window.
     while (!glfwWindowShouldClose(window))
     {
+        app.Update(deltaTime);
+        app.Draw();
+
         // Render here,
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glfwGetTime();
+        //glfwGetTime();
 
         // Calculate delta time and FPS.
-        float deltaTime = glfwGetTime() - lastUpdateTime;
+        deltaTime = (float)glfwGetTime() - lastUpdateTime;
         lastUpdateTime = (float)glfwGetTime();
-        float FPS = 1.0f / deltaTime;
+        FPS = 1.0f / deltaTime;
 
         // Swap front and back buffers.
         glfwSwapBuffers(window);
-
-        Update(deltaTime, FPS);
 
         // Poll for and process events.
         glfwPollEvents();
