@@ -1,20 +1,14 @@
 
-#include <GLFW\glfw3.h>
+#include <GLFW/glfw3.h>
 #include <Windows.h>
 #include <gl/GLU.h>
 #include <iostream>
 #include "Application.h"
 
+using namespace std;
+
 const int RESOLUTION_X = 640;
 const int RESOLUTION_Y = 480;
-
-bool bVSync = true;
-
-float lastUpdateTime = 0.0f;
-float deltaTime = 0.0f;
-float FPS = 0.0f;
-
-using namespace std;
 
 void OnWindowResized(GLFWwindow* window, int width, int height)
 {
@@ -29,10 +23,43 @@ void OnWindowResized(GLFWwindow* window, int width, int height)
     glLoadIdentity();
 }
 
+void Controls(GLFWwindow* window, int key, int scanCode, int action, int mods)
+{
+	if (action == GLFW_PRESS)
+	{
+		if (key == GLFW_KEY_ESCAPE)
+		{
+			glfwSetWindowShouldClose(window, GL_TRUE);
+		}
+	}
+}
+
+float tick = 0.0f;
+float tickRate = 0.01f;
+
+void UpdateGame(float deltaTime)
+{
+	Application::Instance().Update(deltaTime);
+
+	tick -= deltaTime;
+
+	if (tick <= 0.0f)
+	{
+		tick = tickRate;
+		//system("CLS");
+		cout << "Delta Time : " << deltaTime << endl;
+		cout << "FPS : " << 1.0f / deltaTime << endl;
+	}
+}
+
+bool bVSync = true;
+float lastUpdateTime = 0.0f;
+float deltaTime = 0.0f;
+float FPS = 0.0f;
+
 int main(void)
 {
     GLFWwindow* window;
-    Application app;
 
     lastUpdateTime = (float)glfwGetTime();
 
@@ -51,31 +78,32 @@ int main(void)
         return -1;
     }
 
+	// Make the window's context current.
+	glfwMakeContextCurrent(window);
+	// Adjust VSync.
+	glfwSwapInterval(bVSync ? 1 : 0);
+	// Set ortho view.
+	OnWindowResized(window, RESOLUTION_X, RESOLUTION_Y);
+	// Check for input keys.
     glfwSetWindowSizeCallback(window, OnWindowResized);
-
-    // Make the window's context current.
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(bVSync ? 1 : 0);
-
-    OnWindowResized(window, RESOLUTION_X, RESOLUTION_Y);
-
-    app.Start();
+	// Check for input keys.
+	glfwSetKeyCallback(window, Controls);
+	// Run application start.
+    Application::Instance().Start();
 
     // Loop until the user closes the window.
     while (!glfwWindowShouldClose(window))
     {
-        app.Update(deltaTime);
-        app.Draw();
-
         // Render here,
         glClear(GL_COLOR_BUFFER_BIT);
-
-        //glfwGetTime();
 
         // Calculate delta time and FPS.
         deltaTime = (float)glfwGetTime() - lastUpdateTime;
         lastUpdateTime = (float)glfwGetTime();
         FPS = 1.0f / deltaTime;
+
+		UpdateGame(deltaTime);
+		Application::Instance().Draw();
 
         // Swap front and back buffers.
         glfwSwapBuffers(window);
