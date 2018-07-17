@@ -3,6 +3,7 @@
 #include <string>
 #include "GLFW/glfw3.h"
 #include "Transform2D.h"
+#include "Bitmap.h"
 
 using namespace std;
 
@@ -24,6 +25,8 @@ public:
 	Matrix Rotate(float rotation);
 	Matrix Scale(float x, float y);
 
+	void LoadTexture(const char *path, GLuint textureID, unsigned int &width, unsigned int &height);
+	void DrawSquare(GLuint textureID, int xPos, int yPos, int width, int height);
 	void LoadFilePath(const string& path);
 	void SetTextureID(GLuint textureID);
 	void SetDimension(unsigned int width, unsigned int height);

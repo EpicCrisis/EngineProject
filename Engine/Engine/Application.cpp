@@ -58,6 +58,7 @@ void Application::Draw()
 
 Application & Application::Instance()
 {
+	// return singleton
 	static Application instance;
 	return instance;
 }
