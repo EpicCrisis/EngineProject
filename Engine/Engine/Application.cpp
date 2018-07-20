@@ -12,6 +12,13 @@ Application::~Application()
 {
 }
 
+Application & Application::Instance()
+{
+	// return singleton
+	static Application instance;
+	return instance;
+}
+
 void Application::Start()
 {
 	m_dummySprite0.LoadFilePath("../media/100x100Jake.bmp");
@@ -26,14 +33,14 @@ void Application::Update(float deltaTime)
 
 void Application::Draw()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_dummySprite0.Draw
 	(
-		320.0f, 
-		240.0f, 
+		320.0f,
+		240.0f,
 		100.0f * time,
-		0.25f * (sin(time + 1.0f) + 5.0f), 
+		0.25f * (sin(time + 1.0f) + 5.0f),
 		0.5f * (sin(time + 1.0f) + 5.0f)
 	);
 
@@ -54,11 +61,4 @@ void Application::Draw()
 		10.0f * (sin(time + 2.0f) + 0.75f),
 		5.0f * (sin(time + 2.0f) + 0.75f)
 	);
-}
-
-Application & Application::Instance()
-{
-	// return singleton
-	static Application instance;
-	return instance;
 }

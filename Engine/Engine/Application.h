@@ -9,10 +9,6 @@ public:
     Application();
     ~Application();
 
-    void Start();
-    void Update(float deltaTime);
-    void Draw();
-
 	// Create singleton.
 	static Application& Instance();
 
@@ -21,5 +17,9 @@ public:
 	Sprite m_dummySprite0;
 	Sprite m_dummySprite1;
 	Sprite m_dummySprite2;
+
+	void Start();
+	void Update(float deltaTime);
+	void Draw();
 };
 

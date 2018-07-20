@@ -1,6 +1,7 @@
 
 #include "Matrix.h"
 #include "Sprite.h"
+#include "Draw.h"
 
 Sprite::Sprite()
 {
@@ -22,91 +23,22 @@ Sprite::~Sprite()
 {
 }
 
-void Sprite::LoadTexture(const char *path, GLuint textureID, unsigned int &width, unsigned int &height)
+void Sprite::SetTransform(Transform2D _transform)
 {
-	CBitmap bitmap(path);
-
-	glBindTexture(GL_TEXTURE_2D, textureID);
-
-	// Repeat texture in tiles.
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // Horizontal texture.
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); // Vertical texture.
-
-																  // Bilinear filtering.
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Near filter.
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Far filter.
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, bitmap.GetWidth(), bitmap.GetHeight(),
-		0, GL_RGBA, GL_UNSIGNED_BYTE, bitmap.GetBits());
+	transform = _transform;
 }
 
-void Sprite::DrawSquare(GLuint textureID, int xPos, int yPos, int width, int height)
-{
-	float halfW = (float)width * 0.5f;
-	float halfH = (float)height * 0.5f;
-
-	// Enable textures.
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, textureID);
-
-	GLfloat vertices[] =
-	{
-		xPos - halfW, yPos - halfH, 0.0f, // bottom left
-		xPos - halfW, yPos + halfH, 0.0f, // top left
-		xPos + halfW, yPos - halfH, 0.0f, // bottom right
-
-		xPos - halfW, yPos + halfH, 0.0f, // top left
-		xPos + halfW, yPos - halfH, 0.0f, // bottom right
-		xPos + halfW, yPos + halfH, 0.0f  // top right
-	};
-
-	GLfloat texCoords[] =
-	{
-		0.0f, 0.0f,
-		0.0f, 1.0f,
-		1.0f, 0.0f,
-
-		0.0f, 1.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f
-	};
-
-	GLubyte colors[] =
-	{
-		255, 255, 255,
-		255, 255, 255,
-		255, 255, 255,
-
-		255, 255, 255,
-		255, 255, 255,
-		255, 255, 255
-	};
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
-	glColorPointer(3, GL_UNSIGNED_BYTE, 0, colors);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
-}
-
-Matrix Sprite::Translate(int x, int y)
+Matrix Sprite::SetTranslate(int x, int y)
 {
 	return Matrix::makeTranslationMatrix(Vector(x, y, 0.0f));
 }
 
-Matrix Sprite::Rotate(float rotation)
+Matrix Sprite::SetRotate(float rotation)
 {
 	return Matrix::makeRotateMatrix(rotation, Vector(0.0f, 0.0f, 1.0f));
 }
 
-Matrix Sprite::Scale(float x, float y)
+Matrix Sprite::SetScale(float x, float y)
 {
 	return Matrix::makeScaleMatrix(Vector(x, y, 0.0f));
 }
@@ -114,7 +46,7 @@ Matrix Sprite::Scale(float x, float y)
 void Sprite::LoadFilePath(const string & path)
 {
 	glGenTextures(1, m_textureID);
-	LoadTexture(path.c_str(), m_textureID[0], m_width, m_height);
+	Draw::LoadTexture(path.c_str(), m_textureID[0], m_width, m_height);
 }
 
 void Sprite::SetTextureID(GLuint textureID)
@@ -130,14 +62,14 @@ void Sprite::SetDimension(unsigned int width, unsigned int height)
 
 void Sprite::Draw()
 {
-	Matrix transformMatrix = Translate(transform.position.x, transform.position.y);
-	Matrix rotateMatrix = Rotate(transform.rotation);
-	Matrix scaleMatrix = Scale(transform.scale.x, transform.scale.y);
+	translateMatrix = SetTranslate(transform.position.x, transform.position.y);
+	rotateMatrix = SetRotate(transform.rotation);
+	scaleMatrix = SetScale(transform.scale.x, transform.scale.y);
 
-	Matrix viewMatrix = transformMatrix * rotateMatrix * scaleMatrix;
+	Matrix viewMatrix = translateMatrix * rotateMatrix * scaleMatrix;
 
 	glLoadMatrixf((GLfloat*)viewMatrix.mVal);
-	DrawSquare(m_textureID[0], 0, 0, m_width, m_height);
+	Draw::DrawSquare(m_textureID[0], 0, 0, m_width, m_height);
 }
 
 void Sprite::Draw(int xPos, int yPos, float rotation, float xScale, float yScale)
@@ -147,6 +79,22 @@ void Sprite::Draw(int xPos, int yPos, float rotation, float xScale, float yScale
 	transform.rotation = rotation;
 	transform.scale.x = xScale;
 	transform.scale.y = yScale;
+
+	Draw();
+}
+
+void Sprite::Draw(Vector2 position, float rotation, Vector2 scale)
+{
+	transform.position = position;
+	transform.rotation = rotation;
+	transform.scale = scale;
+
+	Draw();
+}
+
+void Sprite::Draw(Transform2D _transform)
+{
+	transform = _transform;
 
 	Draw();
 }
