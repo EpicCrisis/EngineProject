@@ -47,8 +47,9 @@ void UpdateGame(float deltaTime)
 	{
 		tick = tickRate;
 		//system("CLS");
-		cout << "Delta Time : " << deltaTime << endl;
-		cout << "FPS : " << 1.0f / deltaTime << endl;
+		cout << "Delta Time : " << deltaTime << " | ";
+		cout << "FPS : " << 1.0f / deltaTime << " | ";
+		cout << "Time : " << Application::Instance().time << endl;
 	}
 }
 

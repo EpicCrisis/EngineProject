@@ -65,5 +65,8 @@
     <ClInclude Include="Draw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TemplateList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

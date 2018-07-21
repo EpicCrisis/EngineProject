@@ -1,12 +1,17 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
-#include "Sprite.h"
+#include "GameObject.h"
+#include "TemplateList.h"
+#include <list>
+
+using namespace std;
 
 class Application
 {
+private:
+	Application();
 public:
-    Application();
     ~Application();
 
 	// Create singleton.
@@ -14,9 +19,8 @@ public:
 
 	float time;
 
-	Sprite m_dummySprite0;
-	Sprite m_dummySprite1;
-	Sprite m_dummySprite2;
+	list<GameObject> GOs;
+	GameObject GO;
 
 	void Start();
 	void Update(float deltaTime);

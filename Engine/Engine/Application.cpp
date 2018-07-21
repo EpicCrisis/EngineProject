@@ -21,9 +21,12 @@ Application & Application::Instance()
 
 void Application::Start()
 {
-	m_dummySprite0.LoadFilePath("../media/100x100Jake.bmp");
-	m_dummySprite1.LoadFilePath("../media/225x225Solaire.bmp");
-	m_dummySprite2.LoadFilePath("../media/380x370NomadAvatar.bmp");
+	GO.SetImage("../media/100x100Jake.bmp");
+	GOs.push_back(GO);
+	GO.SetImage("../media/225x225Solaire.bmp");
+	GOs.push_back(GO);
+	GO.SetImage("../media/380x370NomadAvatar.bmp");
+	GOs.push_back(GO);
 }
 
 void Application::Update(float deltaTime)
@@ -35,16 +38,35 @@ void Application::Draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	m_dummySprite0.Draw
+	/*object0.Draw
 	(
 		320.0f,
 		240.0f,
 		100.0f * time,
 		0.25f * (sin(time + 1.0f) + 5.0f),
 		0.5f * (sin(time + 1.0f) + 5.0f)
-	);
+	);*/
 
-	m_dummySprite1.Draw
+	GameObject object0 = TemplateList::Get(GOs, 0);
+
+	Vector2 position = Vector2(100.0f, 200.0f);
+	float rotation = 45.0f;
+	Vector2 scale = Vector2(2.0f, 3.0f);
+
+	bool test = false;
+	if (time > 3.0f)
+	{
+		test = true;
+	}
+	if (test)
+	{
+		rotation = 90.0f;
+		position = Vector2(0.0f, 100.0f);
+	}
+
+	TemplateList::Get(GOs, 0).Draw(position, rotation, scale);
+
+	TemplateList::Get(GOs, 1).Draw
 	(
 		300.0f * (sin(time - 1.0f) + 1.0f),
 		100.0f * (sin(time - 1.0f) + 1.0f),
@@ -53,7 +75,7 @@ void Application::Draw()
 		0.75f * (sin(time - 5.0f) + 2.75f)
 	);
 
-	m_dummySprite2.Draw
+	TemplateList::Get(GOs, 2).Draw
 	(
 		500.0f * (tan(time + 2.0f) + 1.0f),
 		400.0f * (tan(time + 2.0f) + 1.0f),
