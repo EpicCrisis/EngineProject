@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "Vector2.h"
@@ -9,3 +10,5 @@ struct Transform2D
 	Vector2 scale;
 	float rotation;
 };
+
+

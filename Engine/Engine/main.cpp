@@ -7,8 +7,8 @@
 
 using namespace std;
 
-const int RESOLUTION_X = 640;
-const int RESOLUTION_Y = 480;
+const int RESOLUTION_X = 800;
+const int RESOLUTION_Y = 600;
 
 void OnWindowResized(GLFWwindow* window, int width, int height)
 {

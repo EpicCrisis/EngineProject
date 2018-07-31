@@ -7,20 +7,21 @@ using namespace std;
 namespace TemplateList
 {
 	template<class T>
-	T Get(list<T> _list, size_t _index)
+	T& Get(list<T*> _list, size_t _index)
 	{
-		typename list<T>::iterator _it = _list.begin();
+		typename list<T*>::iterator ite = _list.begin();
 		size_t count = 0;
 
-		while (_it != _list.end())
+		while (ite != _list.end())
 		{
 			if (count == _index)
 			{
-				return *_it;
+				return **ite;
 			}
 
-			++_it;
+			++ite;
 			++count;
 		}
+		throw;
 	}
 }

@@ -1,9 +1,8 @@
+
 #pragma once
 
 #include <GLFW/glfw3.h>
-#include "GameObject.h"
-#include "TemplateList.h"
-#include <list>
+#include "GameObjectSystem.h"
 
 using namespace std;
 
@@ -11,6 +10,7 @@ class Application
 {
 private:
 	Application();
+
 public:
     ~Application();
 
@@ -18,9 +18,6 @@ public:
 	static Application& Instance();
 
 	float time;
-
-	list<GameObject> GOs;
-	GameObject GO;
 
 	void Start();
 	void Update(float deltaTime);

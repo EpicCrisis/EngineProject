@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "Sprite.h"
@@ -6,36 +7,22 @@
 class GameObject
 {
 private:
-	Transform2D transform;
-	Matrix translateMatrix;
-	Matrix rotateMatrix;
-	Matrix scaleMatrix;
-
-	Matrix SetTranslate(int x, int y);
-	Matrix SetRotate(float rotation);
-	Matrix SetScale(float x, float y);
+	Transform2D m_transform;
+	Sprite m_sprite;
 
 public:
 	GameObject();
+	GameObject(Sprite& sprite);
 	~GameObject();
 
-	Sprite sprite;
+	Transform2D GetTransform() { return m_transform; };
+	void SetTransform(Transform2D transform);
 
-	Transform2D GetTransform() { return transform; };
-	Matrix GetTranslate() { return translateMatrix; };
-	Matrix GetRotate() { return rotateMatrix; };
-	Matrix GetScale() { return scaleMatrix; };
-
-	void SetTransform(Transform2D _transform);
-	void SetImage(const string& path);
+	Sprite& GetSprite() { return m_sprite; };
+	void SetSprite(Sprite& sprite);
 
 	void Start();
 	void Update(float deltaTime);
-
-	// Overload draw functions.
 	void Draw();
-	void Draw(int xPos, int yPos, float rotation, float xScale, float yScale);
-	void Draw(Vector2 position, float rotation, Vector2 scale);
-	void Draw(Transform2D _transform);
 };
 
