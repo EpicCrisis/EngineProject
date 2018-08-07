@@ -1,10 +1,17 @@
 
 #include "ParticleAffector.h"
 
-ParticleAffector::ParticleAffector()
+void ColorAffector::affectParticleUpdate(ParticleObject* particle)
 {
+
 }
 
-ParticleAffector::~ParticleAffector()
+void GravityAffector::affectParticleUpdate(ParticleObject* particle)
 {
+
+}
+
+void FastAffector::affectParticleUpdate(ParticleObject* particle)
+{
+
 }

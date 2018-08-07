@@ -143,7 +143,39 @@ void Sprite::Draw()
 	Matrix viewMatrix = translateMatrix * rotateMatrix * scaleMatrix;
 
 	glLoadMatrixf((GLfloat*)viewMatrix.mVal);
+
+	// enable alpha functions
+	glEnable(GL_BLEND);
+	glEnable(GL_ALPHA_TEST);
+
+	glDepthMask(true);
+
+	if (GetBlendingMode())
+	{
+		if (BLEND_ADDITIVE)
+		{
+			//glBlendFunc(GL_ONE, GL_ONE);
+			glBlendFunc(GL_ONE, GL_ONE);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+		}
+		else if (BLEND_ALPHA)
+		{
+			glBlendFunc(GL_ZERO, GL_SRC_COLOR);
+			//glBlendFunc(GL_DST_COLOR, GL_ZERO);
+			glDepthMask(false);
+		}
+		else if (BLEND_MULTIPLY)
+		{
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		}
+	}
+
 	DrawSquare(m_textureID[0], 0, 0, m_width, m_height, GetColor().R, GetColor().G, GetColor().B);
+
+	glDepthMask(true);
+
+	glDisable(GL_BLEND);
+	glDisable(GL_ALPHA_TEST);
 }
 
 void Sprite::Draw(float xPos, float yPos, float rotation, float xScale, float yScale)

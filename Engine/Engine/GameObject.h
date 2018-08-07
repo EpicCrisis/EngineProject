@@ -6,7 +6,7 @@
 
 class GameObject
 {
-private:
+protected:
 	Transform2D m_transform;
 	Sprite m_sprite;
 
