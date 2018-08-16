@@ -182,15 +182,14 @@ void Application::Update(float deltaTime)
 		);
 	FindGameObject(0).SetTransform(m_transform0);*/	
 	
-	/*Transform2D m_transform1;
+	Transform2D m_transform1;
 	m_transform1 = FindGameObject(0).GetTransform();
 	m_transform1.position =
 		Vector2
 		(
-			100.0f * (sin(time * 5.0f) + 1.0f), 100.0f * (cos(time * 5.0f) + 1.0f)
+			100.0f * (sin(time * 3.0f) + 1.0f), 100.0f * (cos(time * 3.0f) + 1.0f)
 		);
-	m_transform1.rotation += deltaTime * 100.0f;
-	FindGameObject(0).SetTransform(m_transform1);*/
+	FindGameObject(0).SetTransform(m_transform1);
 
 	/*Transform2D m_transform2;
 	m_transform2 = FindGameObject(2).GetTransform();
@@ -221,13 +220,13 @@ void Application::Draw()
 	//=====
 
 	// draw function
-	/*iteGO = m_GOs.GetList().begin();
+	iteGO = m_GOs.GetList().begin();
 	while (iteGO != m_GOs.GetList().end())
 	{
 		GameObject GO = **iteGO;
 		GO.Draw();
 		++iteGO;
-	}*/
+	}
 
 	m_particleSystem0->Draw();
 
