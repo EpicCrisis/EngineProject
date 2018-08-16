@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "Matrix.h"
 
 //! Identity matrix.
 float Matrix::sIdentity[4][4] =

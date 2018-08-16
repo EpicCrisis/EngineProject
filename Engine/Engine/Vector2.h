@@ -20,6 +20,10 @@ public:
 	inline Vector2 operator - (void) { x = -x; y = -y; return *this; }
 	inline bool operator == (const Vector2 & v) { return (x == v.x) && (y == v.y); }
 	inline bool operator != (const Vector2 & v) { return (x != v.x) && (y != v.y); }
+	inline bool operator > (const Vector2 & v) { return (x > v.x) && (y > v.y); }
+	inline bool operator < (const Vector2 & v) { return (x < v.x) && (y < v.y); }
+	inline bool operator >= (const Vector2 & v) { return (x >= v.x) && (y >= v.y); }
+	inline bool operator <= (const Vector2 & v) { return (x <= v.x) && (y <= v.y); }
 
 	// vector2 to vector2 operators
 	inline const Vector2 operator + (const Vector2 & v) const { return Vector2(x + v.x, y + v.y); }

@@ -23,7 +23,7 @@ Matrix Sprite::SetScale(float x, float y)
 	return Matrix::makeScaleMatrix(Vector(x, y, 0.0f));
 }
 
-Sprite::Sprite(const string & path)
+Sprite::Sprite(const std::string& path)
 {
 	SetFilePath(path);
 }
@@ -107,7 +107,7 @@ void Sprite::DrawSquare(GLuint textureID, int xPos, int yPos, int width, int hei
 	glDisableClientState(GL_COLOR_ARRAY);
 }
 
-void Sprite::SetFilePath(const string & path)
+void Sprite::SetFilePath(const std::string & path)
 {
 	glGenTextures(1, m_textureID);
 	LoadTexture(path.c_str(), m_textureID[0], m_width, m_height);
@@ -118,7 +118,7 @@ void Sprite::SetTextureID(GLuint textureID)
 	m_textureID[0] = textureID;
 }
 
-void Sprite::SetColor(Color& color)
+void Sprite::SetColor(const Color& color)
 {
 	m_color = color;
 }
@@ -150,24 +150,24 @@ void Sprite::Draw()
 
 	glDepthMask(true);
 
-	if (GetBlendingMode())
+	if (m_blendMode == BLEND_ADDITIVE)
 	{
-		if (BLEND_ADDITIVE)
-		{
-			//glBlendFunc(GL_ONE, GL_ONE);
-			glBlendFunc(GL_ONE, GL_ONE);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-		}
-		else if (BLEND_ALPHA)
-		{
-			glBlendFunc(GL_ZERO, GL_SRC_COLOR);
-			//glBlendFunc(GL_DST_COLOR, GL_ZERO);
-			glDepthMask(false);
-		}
-		else if (BLEND_MULTIPLY)
-		{
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		}
+		//glBlendFunc(GL_ONE, GL_ONE);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	}
+	else if (m_blendMode == BLEND_MULTIPLY)
+	{
+		glBlendFunc(GL_ZERO, GL_SRC_COLOR);
+		//glBlendFunc(GL_DST_COLOR, GL_ZERO);
+		glDepthMask(false);
+	}
+	else if (m_blendMode == BLEND_ALPHA)
+	{
+
+	}
+	else 
+	{
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	DrawSquare(m_textureID[0], 0, 0, m_width, m_height, GetColor().R, GetColor().G, GetColor().B);

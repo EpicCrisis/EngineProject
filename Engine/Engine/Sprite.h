@@ -9,8 +9,6 @@
 #include "Color.h"
 #include "EnumBlend.h"
 
-using namespace std;
-
 class Sprite
 {
 private:
@@ -31,7 +29,7 @@ private:
 
 public:
     Sprite();
-	Sprite(const string& path);
+	Sprite(const std::string& path);
     ~Sprite();
 
 	const Matrix GetTranslate() { return translateMatrix; };
@@ -47,10 +45,10 @@ public:
 	static void LoadTexture(const char *path, GLuint textureID, unsigned int &width, unsigned int &height);
 	static void DrawSquare(GLuint textureID, int xPos, int yPos, int width, int height, GLubyte r, GLubyte g, GLubyte b);
 	
-	void SetFilePath(const string& path);
+	void SetFilePath(const std::string& path);
 	void SetDimension(unsigned int width, unsigned int height);
 	void SetTextureID(GLuint textureID);
-	void SetColor(Color& color);
+	void SetColor(const Color& color);
 	void SetBlendingMode(EnumBlend blend);
 
 	// Overload draw functions.

@@ -2,13 +2,11 @@
 
 #include "TemplateList.h"
 
-using namespace std;
-
 template <class T>
 class GameObjectContainer
 {
 private:
-	list<T*> m_list;
+	std::list<T*> m_list;
 
 public:
 	GameObjectContainer()
@@ -17,7 +15,7 @@ public:
 
 	~GameObjectContainer()
 	{
-		list<GameObject*>::iterator ite = m_list.begin();
+		std::list<GameObject*>::iterator ite = m_list.begin();
 
 		while (ite != m_list.end())
 		{
@@ -27,7 +25,7 @@ public:
 		m_list.clear();
 	}
 
-	list<T*>& GetList()
+	std::list<T*>& GetList()
 	{
 		return m_list;
 	}

@@ -3,13 +3,11 @@
 
 #include "TemplateList.h"
 
-using namespace std;
-
 template <class T>
 class ParticleAffectorContainer
 {
 private:
-	list<T*> m_list;
+	std::list<T*> m_list;
 
 public:
 	ParticleAffectorContainer()
@@ -18,7 +16,7 @@ public:
 
 	~ParticleAffectorContainer()
 	{
-		list<ParticleAffector*>::iterator ite = m_list.begin();
+		std::list<ParticleAffector*>::iterator ite = m_list.begin();
 
 		while (ite != m_list.end())
 		{
@@ -28,7 +26,7 @@ public:
 		m_list.clear();
 	}
 
-	list<T*>& GetList()
+	std::list<T*>& GetList()
 	{
 		return m_list;
 	}

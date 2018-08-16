@@ -1,7 +1,7 @@
 #ifndef _MATRIX_H
 #define _MATRIX_H
 
-#include "vector.h"
+#include "Vector.h"
 
 #define M_PI 3.1415926535897932384626433832795f
 #define M_2PI 6.283185307179586476925286766559f

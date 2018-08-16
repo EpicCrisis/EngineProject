@@ -4,8 +4,7 @@
 #include <gl/GLU.h>
 #include <iostream>
 #include "Application.h"
-
-using namespace std;
+#include <ctime>
 
 const int RESOLUTION_X = 800;
 const int RESOLUTION_Y = 600;
@@ -47,9 +46,9 @@ void UpdateGame(float deltaTime)
 	{
 		tick = tickRate;
 		//system("CLS");
-		cout << "Delta Time : " << deltaTime << " | ";
-		cout << "FPS : " << 1.0f / deltaTime << " | ";
-		cout << "Time : " << Application::Instance().time << endl;
+		std::cout << "Delta Time : " << deltaTime << " | ";
+		std::cout << "FPS : " << 1.0f / deltaTime << " | ";
+		std::cout << "Time : " << Application::Instance().time << std::endl;
 	}
 }
 
@@ -61,6 +60,8 @@ float FPS = 0.0f;
 int main(void)
 {
     GLFWwindow* window;
+
+	srand(time(NULL));
 
     lastUpdateTime = (float)glfwGetTime();
 

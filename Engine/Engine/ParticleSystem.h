@@ -6,40 +6,43 @@
 #include "ParticleAffector.h"
 #include "ParticleAffectorContainer.h"
 #include "Sprite.h"
+#include "Transform2D.h"
 
-using namespace std;
-
-class ParticleSystem : public ParticleAffector
+class ParticleSystem
 {
 private:
 	float emissionRate;
 	float emissionCounter;
-
-	Vector2 m_position;
+	float particleLife;
+	Transform2D m_transform;
 
 	ParticleObjectContainer<ParticleObject> m_POs;
-	list<ParticleObject*>::iterator itePO;
+	std::list<ParticleObject*>::iterator itePO;
 
 	ParticleAffectorContainer<ParticleAffector> m_PAs;
-	list<ParticleAffector*>::iterator itePA;
+	std::list<ParticleAffector*>::iterator itePA;
 
-
+	Sprite* m_sprite0;
+	
 public:
 	ParticleSystem();
-	ParticleSystem(Sprite& sprite);
+	ParticleSystem(Sprite* sprite);
 	~ParticleSystem();
 
-	ParticleObject* PO;
+	//ParticleObject* PO;
 
 	// overload spawn function
 	ParticleObject* Spawn();
 	ParticleObject* Spawn(ParticleObject* duplicate);
 	ParticleObject* Spawn(Transform2D transform);
 	ParticleObject* Spawn(Vector2 position, float rotation, Vector2 scale);
-
 	ParticleObject& FindParticleObject(int index);
-
 	void Destroy(ParticleObject* particle);
+
+	void SetEmissionRate(float rate);
+	void SetLocation(Vector2 position);
+	void SetParticleLife(float life);
+	void AddAffector(ParticleAffector* affector);
 
 	void Start();
 	void Update(float deltaTime);

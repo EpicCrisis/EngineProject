@@ -42,9 +42,6 @@
     <ClCompile Include="ParticleObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleAffector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -71,9 +68,6 @@
     <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TemplateList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -89,7 +83,7 @@
     <ClInclude Include="ParticleObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleObjectContainer.h">
+    <ClInclude Include="ParticleAffector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectContainer.h">
@@ -98,7 +92,10 @@
     <ClInclude Include="ParticleAffectorContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleAffector.h">
+    <ClInclude Include="ParticleObjectContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
